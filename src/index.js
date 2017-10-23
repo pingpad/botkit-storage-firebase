@@ -12,8 +12,12 @@ module.exports = function(config) {
         throw new Error('firebase_uri is required.');
     }
 
-    var rootRef = new Firebase(config.firebase_uri),
-        teamsRef = rootRef.child('teams'),
+    var rootRef = new Firebase(config.firebase_uri);
+    if(config.firebase_authtoken) {
+      rootRef.authWithCustomToken(config.firebase_authtoken);
+    }
+
+    var teamsRef = rootRef.child('teams'),
         usersRef = rootRef.child('users'),
         channelsRef = rootRef.child('channels');
 
